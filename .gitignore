@@ -1,4 +1,43 @@
 # Design
-Vault-Merise.drawio
 .$Vault-Merise.drawio.bkp
 
+# Angular - Compiled output
+Vault/dist/
+Vault/tmp/
+Vault/out-tsc/
+Vault/bazel-out/
+
+# Angular - Node
+Vault/node_modules/
+Vault/npm-debug.log
+Vault/yarn-error.log
+
+# Angular - IDEs and editors
+Vault/.idea/
+Vault/.project
+Vault/.classpath
+Vault/.c9/
+Vault/*.launch
+Vault/.settings/
+Vault/*.sublime-workspace
+
+# Angular - Visual Studio Code
+Vault/.vscode/*
+!Vault/.vscode/settings.json
+!Vault/.vscode/tasks.json
+!Vault/.vscode/launch.json
+!Vault/.vscode/extensions.json
+Vault/.history/*
+
+# Angular - Miscellaneous
+Vault/.angular/cache/
+Vault/.sass-cache/
+Vault/connect.lock
+Vault/coverage/
+Vault/libpeerconnection.log
+Vault/testem.log
+Vault/typings/
+
+# Angular - System files
+Vault/.DS_Store
+Vault/Thumbs.db
