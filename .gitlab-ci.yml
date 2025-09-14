@@ -2,7 +2,7 @@ close_issue_on_dev:
   image: alpine:latest
   stage: deploy
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" && $CI_COMMIT_MESSAGE =~ /Closes #|Fixes #|Resolves #/'
+    - if: '$CI_COMMIT_BRANCH == "dev" && $CI_COMMIT_MESSAGE =~ /Close #|Fix #|Resolve #/'
   script:
     - 'echo "Commit Message: $CI_COMMIT_MESSAGE"'
     - apk add --no-cache grep curl    
