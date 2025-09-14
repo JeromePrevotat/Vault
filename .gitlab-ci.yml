@@ -8,7 +8,7 @@ close_issue_on_dev:
     - apk add --no-cache grep curl    
     # 2. Extrait le premier numéro d'issue trouvé après un mot-clé
     #    Ex: "Closes #123" -> extrait "123"
-    - ISSUE_ID=$(echo "$CI_COMMIT_MESSAGE" | grep -oE '(Closes|Fixes|Resolves) \#\K[0-9]+' | head -n 1)    
+    - 'ISSUE_ID=$(echo "$CI_COMMIT_MESSAGE" | grep -oP "(close|fix|resolve)s?d? #\K[0-9]+" -i | head -n 1)'
     # 3. Vérifie si un ID d'issue a bien été trouvé
     - |
       if [ -z "$ISSUE_ID" ]; then
