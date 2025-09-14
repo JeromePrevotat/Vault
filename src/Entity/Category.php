@@ -24,7 +24,7 @@ class Category
     /**
      * @var Collection<int, File>
      */
-    #[ORM\ManyToMany(targetEntity: File::class, mappedBy: 'categoryId')]
+    #[ORM\ManyToMany(targetEntity: File::class, mappedBy: 'category')]
     private Collection $relatedFiles;
 
     public function __construct()

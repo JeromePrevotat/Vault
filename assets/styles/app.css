@@ -1,3 +1,13 @@
+--color-white {
+    color: #ffffff;
+}
+--color-charcoal {
+    color: #373f47;
+}
+--color-chamoisee {
+    color: #a77e58;
+}
+
 body {
-    background-color: skyblue;
+    background-color: var(--color-white);
 }

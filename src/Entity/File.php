@@ -25,11 +25,11 @@ class File
     #[ORM\Column(length: 255)]
     private ?string $path = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $salt = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $salt = null;
 
     #[ORM\ManyToOne(inversedBy: 'ownedFiles')]
     #[ORM\JoinColumn(nullable: false)]
@@ -39,11 +39,11 @@ class File
      * @var Collection<int, Category>
      */
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'relatedFiles')]
-    private Collection $categories;
+    private Collection $category;
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,18 +87,6 @@ class File
         return $this;
     }
 
-    public function getSalt(): ?string
-    {
-        return $this->salt;
-    }
-
-    public function setSalt(string $salt): static
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
     public function getContent(): ?string
     {
         return $this->content;
@@ -107,6 +95,18 @@ class File
     public function setContent(string $content): static
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getSalt(): ?string
+    {
+        return $this->salt;
+    }
+
+    public function setSalt(string $salt): static
+    {
+        $this->salt = $salt;
 
         return $this;
     }
@@ -126,15 +126,15 @@ class File
     /**
      * @return Collection<int, Category>
      */
-    public function getCategories(): Collection
+    public function getCategory(): Collection
     {
-        return $this->categories;
+        return $this->category;
     }
 
     public function addCategory(Category $category): static
     {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
+        if (!$this->category->contains($category)) {
+            $this->category->add($category);
         }
 
         return $this;
@@ -142,7 +142,7 @@ class File
 
     public function removeCategory(Category $category): static
     {
-        $this->categories->removeElement($category);
+        $this->category->removeElement($category);
 
         return $this;
     }
