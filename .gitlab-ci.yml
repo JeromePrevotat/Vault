@@ -1,0 +1,23 @@
+close_issue_on_dev:
+  image: alpine:latest
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev" && $CI_COMMIT_MESSAGE =~ /Closes #|Fixes #|Resolves #/'
+  script:
+    - 'echo "Commit Message: $CI_COMMIT_MESSAGE"'
+    - apk add --no-cache grep curl    
+    # 2. Extrait le premier numéro d'issue trouvé après un mot-clé
+    #    Ex: "Closes #123" -> extrait "123"
+    - ISSUE_ID=$(echo "$CI_COMMIT_MESSAGE" | grep -oE '(Closes|Fixes|Resolves) \#\K[0-9]+' | head -n 1)    
+    # 3. Vérifie si un ID d'issue a bien été trouvé
+    - |
+      if [ -z "$ISSUE_ID" ]; then
+        echo "No Commit ID found."
+        exit 0
+      fi
+    - echo "Issue \#$ISSUE_ID is now closed."   
+    # 4. Appelle l'API GitLab pour mettre à jour l'issue
+    #    On utilise les variables prédéfinies de GitLab (CI_API_V4_URL, CI_PROJECT_ID)
+    #    et notre token d'accès personnel ($GITLAB_API_TOKEN)
+    - 'curl --request PUT --header "PRIVATE-TOKEN: $GITLAB_API_TOKEN" \
+           "$CI_API_V4_URL/projects/$CI_PROJECT_ID/issues/$ISSUE_ID?state_event=close"'
