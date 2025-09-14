@@ -1,43 +1,31 @@
-# Design
-.$Vault-Merise.drawio.bkp
 
-# Angular - Compiled output
-Vault/dist/
-Vault/tmp/
-Vault/out-tsc/
-Vault/bazel-out/
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
 
-# Angular - Node
-Vault/node_modules/
-Vault/npm-debug.log
-Vault/yarn-error.log
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
 
-# Angular - IDEs and editors
-Vault/.idea/
-Vault/.project
-Vault/.classpath
-Vault/.c9/
-Vault/*.launch
-Vault/.settings/
-Vault/*.sublime-workspace
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###
 
-# Angular - Visual Studio Code
-Vault/.vscode/*
-!Vault/.vscode/settings.json
-!Vault/.vscode/tasks.json
-!Vault/.vscode/launch.json
-!Vault/.vscode/extensions.json
-Vault/.history/*
+###> env files ###
+.env
+.env.dev
+.env.test
+###< env files ###
 
-# Angular - Miscellaneous
-Vault/.angular/cache/
-Vault/.sass-cache/
-Vault/connect.lock
-Vault/coverage/
-Vault/libpeerconnection.log
-Vault/testem.log
-Vault/typings/
+###> Merise ###
+*.drawio.bkp
+###< Merise ###
 
-# Angular - System files
-Vault/.DS_Store
-Vault/Thumbs.db
