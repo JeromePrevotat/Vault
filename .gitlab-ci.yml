@@ -19,5 +19,4 @@ close_issue_on_dev:
     # 4. Appelle l'API GitLab pour mettre à jour l'issue
     #    On utilise les variables prédéfinies de GitLab (CI_API_V4_URL, CI_PROJECT_ID)
     #    et notre token d'accès personnel ($GITLAB_API_TOKEN)
-    - 'curl --request PUT --header "PRIVATE-TOKEN: $GITLAB_API_TOKEN" \
-           "$CI_API_V4_URL/projects/$CI_PROJECT_ID/issues/$ISSUE_ID?state_event=close"'
+    - 'curl --request PUT --header "PRIVATE-TOKEN: $GITLAB_API_TOKEN" "$CI_API_V4_URL/projects/$CI_PROJECT_ID/issues/$ISSUE_ID?state_event=close"'
