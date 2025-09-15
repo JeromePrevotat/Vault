@@ -6,4 +6,3 @@
 Project setup
 Entities created
 sync github/gitlab
-dummy change

@@ -1,13 +1,30 @@
---color-white {
-    color: #ffffff;
-}
---color-charcoal {
-    color: #373f47;
-}
---color-chamoisee {
-    color: #a77e58;
+:root {
+    --color-white: #ffffff;
+    --color-charcoal: #373f47;
+    --color-chamoisee: #a77e58;
 }
 
 body {
     background-color: var(--color-white);
+}
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.home-msg {
+    text-align: center;
+    margin-top: 16px;
+    margin: 0 auto;
+    padding: 8px;
+    color: var(--color-white);
+    background-color: var(--color-charcoal);
+    border-radius: 8px;
+    width: 80%;
 }
