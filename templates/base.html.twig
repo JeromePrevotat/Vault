@@ -27,7 +27,7 @@
                         {# <a class="nav-link" href="{{ path('download') }}">Download</a> #}
                     </div>
                     <div class="navbar-nav">
-                        {% if app.user and app.user.isAuthenticated() %}
+                        {% if app.user %}
                             <a class="nav-link" href="{{ path('app_logout') }}">Logout ({{ app.user.username }})</a>
                         {% else %}
                             <a class="nav-link" href="{{ path('app_login') }}">Login</a>
@@ -38,12 +38,12 @@
             </div>
         </nav>
         <div class="container my-4">
-            {% if app.user and app.user.isAuthenticated() %}
+            {% if app.user %}
                 <img src="{{ asset('images/vault-door-open.png') }}" alt="" class="background-image">
             {% else %}
                 <img src="{{ asset('images/vault-door-closed.png') }}" alt="" class="background-image">
             {% endif %}
+            {% block body %}{% endblock %}
         </div>
-        {% block body %}{% endblock %}
     </body>
 </html>

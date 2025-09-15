@@ -28,3 +28,11 @@ body {
     border-radius: 8px;
     width: 80%;
 }
+
+.form-container {
+    background-color: var(--color-charcoal);
+    border: 1px solid var(--color-chamoisee);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

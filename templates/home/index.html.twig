@@ -3,7 +3,7 @@
 {% block title %}Vault{% endblock %}
 
 {% block body %}
-{% if app.user and app.user.isAuthenticated() %}
+{% if app.user %}
     <h1 class="home-msg">Welcome to your Vault</h1>
 {% else %}
     <h1 class="home-msg">Please log in or register to access your secure storage.</h1>
