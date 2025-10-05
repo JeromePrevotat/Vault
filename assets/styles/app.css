@@ -39,6 +39,8 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
+
 #form-file-container {
     display: flex;
     flex-wrap: wrap;
@@ -50,6 +52,10 @@ body {
     width: 100%;
     max-width: 400px;
     min-width: 300px;
+}
+
+h1 {
+    text-align: center;
 }
 
 h2 {
