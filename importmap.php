@@ -16,6 +16,13 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'file-encryption' => [
+        'path' => './assets/file-encryption.js',
+    ],
+    'file-upload' => [
+        'path' => './assets/file-upload.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

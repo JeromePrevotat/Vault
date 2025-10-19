@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\FileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FileRepository::class)]
@@ -17,19 +16,13 @@ class File
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $slug = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $filename = null;
 
     #[ORM\Column(length: 255)]
     private ?string $path = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $content = null;
-
     #[ORM\Column(length: 255)]
-    private ?string $salt = null;
+    private ?string $iv = null;
 
     #[ORM\ManyToOne(inversedBy: 'ownedFiles')]
     #[ORM\JoinColumn(nullable: false)]
@@ -41,6 +34,9 @@ class File
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'relatedFiles')]
     private Collection $category;
 
+    #[ORM\Column(length: 255)]
+    private ?string $salt = null;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
@@ -49,18 +45,6 @@ class File
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
-
-        return $this;
     }
 
     public function getFilename(): ?string
@@ -87,26 +71,14 @@ class File
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getIv(): ?string
     {
-        return $this->content;
+        return $this->iv;
     }
 
-    public function setContent(string $content): static
+    public function setIv(string $iv): static
     {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    public function getSalt(): ?string
-    {
-        return $this->salt;
-    }
-
-    public function setSalt(string $salt): static
-    {
-        $this->salt = $salt;
+        $this->iv = $iv;
 
         return $this;
     }
@@ -143,6 +115,18 @@ class File
     public function removeCategory(Category $category): static
     {
         $this->category->removeElement($category);
+
+        return $this;
+    }
+
+    public function getSalt(): ?string
+    {
+        return $this->salt;
+    }
+
+    public function setSalt(string $salt): static
+    {
+        $this->salt = $salt;
 
         return $this;
     }

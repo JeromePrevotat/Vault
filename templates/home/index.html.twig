@@ -9,11 +9,15 @@
     <div class="form-container form-file">
       <h2>Upload a File</h2>
       {{ form_errors(uploadForm) }}
-      {{ form_start(uploadForm) }}
+      {{ form_start(uploadForm, {'attr': {'data-turbo': 'false'}}) }}
         {{ form_row(uploadForm.file) }}
         {{ form_row(uploadForm.category) }}
         {{ form_row(uploadForm.secretKey, {
-          label: 'Secret Key'
+          label: 'Secret Key',
+          type: 'password',
+          id: 'secretKey',
+          required: true,
+          placeholder: 'Enter your secret key'
         }) }}
         <button type="submit" class="btn btn-success" id="upload-button">Upload</button>
       {{ form_end(uploadForm) }}
@@ -50,5 +54,9 @@
 {% else %}
     <h1 class="home-msg">Please log in or register to access your secure storage.</h1>
 {% endif %}
+
+{% block scripts %}
+  <script type="module" src="{{ asset('file-upload.js') }}"></script>
+{% endblock %}
 
 {% endblock %}

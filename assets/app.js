@@ -7,16 +7,3 @@ import './bootstrap.js';
  */
 import './styles/app.css';
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
-
-const uploadButton = document.getElementById('upload-button');
-
-function uploadFile(){
-    console.log('File uploaded');
-}
-
-function addEventListeners(){
-    uploadButton.addEventListener('click', uploadFile);
-}
-
-addEventListeners();
