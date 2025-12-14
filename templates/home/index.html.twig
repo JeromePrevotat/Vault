@@ -19,24 +19,26 @@
           required: true,
           placeholder: 'Enter your secret key'
         }) }}
-        <button type="submit" class="btn btn-success" id="upload-button">Upload</button>
+        <button type="submit" name="upload-btn" class="btn btn-success" id="upload-button">Upload</button>
       {{ form_end(uploadForm) }}
   </div>
   <div class="form-container form-file">
     <h2>Download a File</h2>
     {% if files != null %}
       <h3 class="mb-3">Available Files:</h3>
+      <div id="file-container">
       {% for file in files %}
         <div class="mb-2">
-          <input
-            class="form-check-input"
-            type="radio" name="selected-file"
-            id="{{ file.id }}"
-            value="{{ file.id }}">
-          </input>
+            <input
+              class="form-check-input"
+              type="radio" name="selected-file"
+              id="{{ file.id }}"
+              value="{{ file.id }}">
+            </input>
           <label class="form-check-label" for="{{ file.id }}">{{ file.filename }}</label>
         </div>
       {% endfor %}
+      </div>
     {% endif %}
     {{ form_errors(downloadForm) }}
     {{ form_start(downloadForm) }}
@@ -45,8 +47,8 @@
         label: 'Secret Key'
       }) }}
       <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary">Filter</button>
-        <button class="btn btn-success" id="download-button">Download</button>
+        <button type="submit" name="filter-btn" class="btn btn-primary" id="filter-button">Filter</button>
+        <button type="submit" name="download-btn" class="btn btn-success" id="download-button">Download</button>
       </div>
     {{ form_end(downloadForm) }}
     </div>
@@ -57,6 +59,8 @@
 
 {% block scripts %}
   <script type="module" src="{{ asset('file-upload.js') }}"></script>
+  <script type="module" src="{{ asset('file-download.js') }}"></script>
+  <script type="module" src="{{ asset('file-filter.js') }}"></script>
 {% endblock %}
 
 {% endblock %}

@@ -64,3 +64,12 @@ h2 {
     padding: 8px;
     color: var(--color-white);
 }
+
+#flash-messages {
+    position: fixed;
+    top: 16px;
+    /* Bord gauche au centre + 50% de l'element */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+}

@@ -31,13 +31,14 @@ final class HomeController extends AbstractController
     public function index(Request $request): Response
     {
         if ($request->isMethod('POST')) {
-            return $this->uploadFile($request);
+            if ($request->request->has('download-btn')) {
+                return $this->downloadFile($request);
+            }
+            if ($request->request->has('upload-btn')) {
+                return $this->uploadFile($request);
+            }
         }
-        $files = [
-            ['id' => 1, 'filename' => 'Document1.pdf'],
-            ['id' => 2, 'filename' => 'Document2.pdf'],
-            ['id' => 3, 'filename' => 'Document3.pdf'],
-        ];
+        $files = $this->em->getRepository(File::class)->findByOwner($this->getUser());
         $file = new File();
         $uploadForm = $this->createForm(FileUploadType::class, $file);
         $uploadForm->handleRequest($request);
@@ -45,6 +46,67 @@ final class HomeController extends AbstractController
         $downloadForm->handleRequest($request);
 
         return $this->renderHome($uploadForm, $downloadForm, $files);
+    }
+
+    #[Route('/download/{id}', name: 'download_file', methods: ['POST'])]
+    public function downloadFile(Request $request): Response {
+        $fileId = $request->get('id');
+        $file = $this->em->getRepository(File::class)->find($fileId);
+
+        if (!$file) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'File not found.',
+            ], Response::HTTP_NOT_FOUND);
+        }
+        if ($file->getOwner() !== $this->getUser()) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Access denied.',
+            ], Response::HTTP_FORBIDDEN);
+        }
+
+        $filePath = $file->getPath();
+        if (!file_exists($filePath)) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'File not found.',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+       return new JsonResponse([
+            'success' => true,
+            'iv' => $file->getIv(),
+            'salt' => $file->getSalt(),
+            'fileName' => $file->getFilename(),
+            'fileContent' => base64_encode(file_get_contents($filePath)),
+        ]);
+    }
+
+    #[Route('/api/files/filter', name: 'api_filter_files', methods: ['POST'])]
+    public function apiFilterFiles(Request $request): JsonResponse{
+        $user = $this->getUser();
+        if (!$user) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Vous devez être connecté.',
+            ]);
+        }
+        $categoryIds = $request->getPayload()->all('categories') ?? [];
+        
+        if (empty($categoryIds)) {
+            $files = $this->em->getRepository(File::class)->findByOwner($user);
+        } else {
+            $files = $this->em->getRepository(File::class)->findByOwnerAndCategory($user, $categoryIds);
+        }
+        
+        $data = array_map(fn(File $f) => [
+            'id' => $f->getId(),
+            'filename' => $f->getFilename(),
+            'categories' => $f->getCategory()->map(fn(Category $c) => $c->getName())->toArray(),
+        ], $files);
+        
+        return new JsonResponse(['success' => true, 'files' => $data]);
     }
 
     public function uploadFile(Request $request): Response {

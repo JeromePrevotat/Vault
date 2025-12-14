@@ -1,4 +1,5 @@
 import { encryptFile, arrayBufferToBase64 } from './file-encryption.js';
+import { showFlash } from './msg-flash.js';
 
 const uploadButton = document.getElementById('upload-button');
 const file_input = document.getElementById('file_upload_file');
@@ -20,14 +21,12 @@ async function uploadFile(event){
   const secretKey = secretKey_input.value.trim();
   const errors = uploadFieldValidation(file, category, secretKey);
   if(errors.length > 0){
-    alert(errors.join('\n'));
+    showFlash(errors.join('\n'), 'warning');
     return;
   }
   console.log('Encrypting File...');
   try {
     const { encryptedData, iv, salt } = await encryptFile(file, secretKey);
-
-    console.log('Uploading File...');
     const fileBlob = new Blob([encryptedData], { type: 'application/octet-stream' });
     const formData = buildFormData(fileBlob, iv, salt, file, category);
     const response = await fetch('/', {
@@ -36,11 +35,9 @@ async function uploadFile(event){
     });
     if (!response.ok) throw new Error('Upload failed: ' + response.statusText);
     const result = await response.json();
-    console.log('File Uploaded:', result);
-    alert('File uploaded successfully');
+    showFlash('File Uploaded: ' + result.message, 'success');
   } catch (error) {
-    console.error('Error encrypting file:', error);
-    alert('Error encrypting file: ' + error.message);
+    showFlash('Error encrypting file: ' + error.message, 'error');
   }
 }
 
@@ -50,6 +47,7 @@ function buildFormData(fileBlob, iv, salt, file, category){
   formData.append('iv', arrayBufferToBase64(iv));
   formData.append('salt', arrayBufferToBase64(salt));
   formData.append('fileName', file.name);
+  formData.append('upload-btn', '1');
   category.forEach(catId => { formData.append('category[]', catId); });
   return formData;
 }
