@@ -38,7 +38,11 @@ final class HomeController extends AbstractController
                 return $this->uploadFile($request);
             }
         }
-        $files = $this->em->getRepository(File::class)->findByOwner($this->getUser());
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        $files = $this->em->getRepository(File::class)->findByOwner($user);
         $file = new File();
         $uploadForm = $this->createForm(FileUploadType::class, $file);
         $uploadForm->handleRequest($request);
