@@ -9,7 +9,7 @@ RUN echo '<Directory /var/www/html/public>\n\
   Require all granted\n\
   </Directory>' >> /etc/apache2/apache2.conf
 WORKDIR /var/www/html
-COPY . /var/www/html/
+COPY . /var/www/html
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader
 EXPOSE 80
