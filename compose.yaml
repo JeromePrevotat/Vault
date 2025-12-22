@@ -24,13 +24,18 @@ services:
       context: .
     container_name: vault-web
     restart: unless-stopped
-    # environment:
-    #   DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:3306/${MYSQL_DATABASE}?serverVersion=8&charset=utf8mb4
+    environment:
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:3306/${MYSQL_DATABASE}?serverVersion=8&charset=utf8mb4
     depends_on:
       database:
        condition: service_healthy
     volumes:
       - ./:/var/www/html
+      - vendor_data:/var/www/html/vendor
+      - var_data:/var/www/html/var
     ports:
       - "8080:80"
     networks:
@@ -41,3 +46,5 @@ networks:
 
 volumes:
   database_data:
+  vendor_data:
+  var_data:
