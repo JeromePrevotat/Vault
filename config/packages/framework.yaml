@@ -10,7 +10,6 @@ framework:
         handler_id: null
         gc_maxlifetime: 86400
         save_path: '%kernel.project_dir%/var/sessions'
-        cookie_domain: 'localhost'
     http_method_override: true
     #esi: true
     #fragments: true
