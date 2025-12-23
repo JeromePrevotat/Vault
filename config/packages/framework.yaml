@@ -1,12 +1,19 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
+    trusted_proxies: '%env(TRUSTED_PROXIES)%'
+    trusted_hosts: '%env(TRUSTED_HOSTS)%'
+    trusted_headers:
+      - x-forwarded-for
+      - x-forwarded-host
+      - x-forwarded-proto
+      - x-forwarded-port
 
     # Note that the session will be started ONLY if you read or write from it.
     session:
         cookie_httponly: true
         cookie_samesite: lax
-        cookie_secure: false
+        cookie_secure: auto
         handler_id: null
         gc_maxlifetime: 86400
         save_path: '%kernel.project_dir%/var/sessions'

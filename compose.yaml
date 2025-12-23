@@ -29,6 +29,8 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:3306/${MYSQL_DATABASE}?serverVersion=8&charset=utf8mb4
+      VIRTUAL_HOST: vault.91.166.39.12.nip.io
+      VIRTUAL_PORT: 80
     depends_on:
       database:
        condition: service_healthy
@@ -36,13 +38,14 @@ services:
       - ./:/var/www/html
       - vendor_data:/var/www/html/vendor
       - var_data:/var/www/html/var
-    ports:
-      - "8080:80"
     networks:
-    - vault
+      - vault
+      - nginx-proxy
 
 networks:
   vault:
+  nginx-proxy:
+    external: true
 
 volumes:
   database_data:
